@@ -24,6 +24,13 @@ class AppHandler extends Handler implements AppIf
         return config('app.version');
     }
 
+    public function arrayTest()
+    {
+        return [
+            'sss'
+        ];
+    }
+
     /**
      * @desc   测试异常抛出
      * @author limx
@@ -33,7 +40,7 @@ class AppHandler extends Handler implements AppIf
     {
         throw new ThriftException([
             'code' => '400',
-            'message' => '异常测试'
+            'message' => '异常测试',
         ]);
     }
 }

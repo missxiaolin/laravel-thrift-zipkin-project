@@ -40,6 +40,7 @@ class Version extends Command
     {
         try {
             $client = AppClient::getInstance();
+            dd($client->arrayTest());
             $this->info($client->version());
         } catch (\Exception $e) {
             dump($e->getMessage());

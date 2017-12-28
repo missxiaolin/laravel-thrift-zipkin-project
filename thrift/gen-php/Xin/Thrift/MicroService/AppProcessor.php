@@ -89,4 +89,27 @@ class AppProcessor {
       $output->getTransport()->flush();
     }
   }
+  protected function process_arrayTest($seqid, $input, $output) {
+    $args = new \Xin\Thrift\MicroService\App_arrayTest_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \Xin\Thrift\MicroService\App_arrayTest_result();
+    try {
+      $result->success = $this->handler_->arrayTest();
+    } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'arrayTest', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('arrayTest', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
 }

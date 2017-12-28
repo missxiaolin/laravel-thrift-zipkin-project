@@ -12,4 +12,7 @@ service App {
 
     // 测试异常抛出
     string testException() throws(1:ThriftException ex)
+
+    // 返回数组测试
+    map<i32,string> arrayTest() throws (1:ThriftException ex)
 }

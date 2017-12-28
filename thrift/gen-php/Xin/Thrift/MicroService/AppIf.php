@@ -27,6 +27,11 @@ interface AppIf {
    * @throws \Xin\Thrift\MicroService\ThriftException
    */
   public function testException();
+  /**
+   * @return array
+   * @throws \Xin\Thrift\MicroService\ThriftException
+   */
+  public function arrayTest();
 }
 
 
