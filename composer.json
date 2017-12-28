@@ -11,6 +11,7 @@
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
+        "jcchavezs/zipkin": "1.0.0-beta4",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "limingxinleo/thrift": "^0.10.0"
