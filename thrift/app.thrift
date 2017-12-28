@@ -14,5 +14,5 @@ service App {
     string testException() throws(1:ThriftException ex)
 
     // 返回数组测试
-    map<i32,string> arrayTest() throws (1:ThriftException ex)
+    map<i32,string> arrayTest(1:string username) throws (1:ThriftException ex)
 }

@@ -24,10 +24,10 @@ class AppHandler extends Handler implements AppIf
         return config('app.version');
     }
 
-    public function arrayTest()
+    public function arrayTest($username)
     {
         return [
-            '返回数组测试'
+            $username
         ];
     }
 

@@ -95,7 +95,7 @@ class AppProcessor {
     $input->readMessageEnd();
     $result = new \Xin\Thrift\MicroService\App_arrayTest_result();
     try {
-      $result->success = $this->handler_->arrayTest();
+      $result->success = $this->handler_->arrayTest($args->username);
     } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
       $result->ex = $ex;
     }

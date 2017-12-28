@@ -19,11 +19,24 @@ use Thrift\Exception\TApplicationException;
 class App_arrayTest_args {
   static $_TSPEC;
 
+  /**
+   * @var string
+   */
+  public $username = null;
 
-  public function __construct() {
+  public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
+        1 => array(
+          'var' => 'username',
+          'type' => TType::STRING,
+          ),
         );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['username'])) {
+        $this->username = $vals['username'];
+      }
     }
   }
 
@@ -46,6 +59,13 @@ class App_arrayTest_args {
       }
       switch ($fid)
       {
+        case 1:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->username);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
         default:
           $xfer += $input->skip($ftype);
           break;
@@ -59,6 +79,11 @@ class App_arrayTest_args {
   public function write($output) {
     $xfer = 0;
     $xfer += $output->writeStructBegin('App_arrayTest_args');
+    if ($this->username !== null) {
+      $xfer += $output->writeFieldBegin('username', TType::STRING, 1);
+      $xfer += $output->writeString($this->username);
+      $xfer += $output->writeFieldEnd();
+    }
     $xfer += $output->writeFieldStop();
     $xfer += $output->writeStructEnd();
     return $xfer;

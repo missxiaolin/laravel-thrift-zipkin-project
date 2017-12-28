@@ -5,14 +5,14 @@ namespace App\Console\Commands\Thrift\Test;
 use App\Thrift\Clients\AppClient;
 use Illuminate\Console\Command;
 
-class Version extends Command
+class ArrayTest extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'thrift:test@version';
+    protected $signature = 'thrift:test@array';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class Version extends Command
     {
         try {
             $client = AppClient::getInstance();
-            $this->info($client->version());
+            dump($client->arrayTest('小林'));
         } catch (\Exception $e) {
             dump($e->getMessage());
         }

@@ -133,15 +133,16 @@ class AppClient implements \Xin\Thrift\MicroService\AppIf {
     throw new \Exception("testException failed: unknown result");
   }
 
-  public function arrayTest()
+  public function arrayTest($username)
   {
-    $this->send_arrayTest();
+    $this->send_arrayTest($username);
     return $this->recv_arrayTest();
   }
 
-  public function send_arrayTest()
+  public function send_arrayTest($username)
   {
     $args = new \Xin\Thrift\MicroService\App_arrayTest_args();
+    $args->username = $username;
     $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {

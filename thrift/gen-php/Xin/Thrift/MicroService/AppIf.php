@@ -28,10 +28,11 @@ interface AppIf {
    */
   public function testException();
   /**
+   * @param string $username
    * @return array
    * @throws \Xin\Thrift\MicroService\ThriftException
    */
-  public function arrayTest();
+  public function arrayTest($username);
 }
 
 
