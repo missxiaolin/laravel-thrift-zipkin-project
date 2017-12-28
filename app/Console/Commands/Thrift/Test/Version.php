@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Thrift\Test;
 
+use App\Thrift\Clients\AppClient;
 use Illuminate\Console\Command;
 
 class Version extends Command
@@ -37,6 +38,12 @@ class Version extends Command
      */
     public function handle()
     {
-        echo 1;
+        try {
+            $client = AppClient::getInstance();
+            $this->info($client->version());
+        } catch (\Exception $e) {
+            dump($e->getMessage());
+        }
+
     }
 }
