@@ -55,6 +55,9 @@ class Service extends Socket
         ];
     }
 
+    /**
+     * @param swoole_server $server
+     */
     protected function beforeServerStart(swoole_server $server)
     {
         parent::beforeServerStart($server);
@@ -67,7 +70,10 @@ class Service extends Socket
         $server->set($this->config);
     }
 
-
+    /**
+     * @param swoole_server $serv
+     * @param $workerId
+     */
     public function workerStart(swoole_server $serv, $workerId)
     {
         // dump(get_included_files()); // 查看不能被平滑重启的文件
@@ -77,6 +83,12 @@ class Service extends Socket
         $this->processor->registerProcessor('app', new AppProcessor($handler));
     }
 
+    /**
+     * @param swoole_server $server
+     * @param $fd
+     * @param $reactor_id
+     * @param $data
+     */
     public function receive(swoole_server $server, $fd, $reactor_id, $data)
     {
         $transport = new TMemoryBuffer($data);
