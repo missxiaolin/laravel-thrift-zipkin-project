@@ -27,7 +27,7 @@ class AppHandler extends Handler implements AppIf
     public function arrayTest()
     {
         return [
-            'sss'
+            '返回数组测试'
         ];
     }
 
