@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::any('/index/index', 'IndexController@index')->name('index.index');
+Route::group(['middleware' => 'zipkin'], function () {
+    Route::any('/index/index', 'IndexController@index')->name('index.index');
+});

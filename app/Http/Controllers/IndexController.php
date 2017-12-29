@@ -9,14 +9,17 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    /**
+     * @param Request $request
+     */
     public function index(Request $request)
     {
-        $tracer = tracer();
-        $uri = $request->url();
-        list($new_tracer, $options) = Tracer::getInstance()->newTrace($tracer, $uri);
-        ZipkinClient::getInstance()->setOptions($options);
-        $version = AppClient::getInstance()->welcome(ZipkinClient::getInstance()->options);
-        $new_tracer->finish();
-        $tracer->flush();
+//        $tracer = tracer();
+//        $uri = $request->url();
+//        list($new_tracer, $options) = Tracer::getInstance()->newTrace($tracer, $uri);
+//        ZipkinClient::getInstance()->setOptions($options);
+//        $version = AppClient::getInstance()->welcome(ZipkinClient::getInstance()->options);
+//        $new_tracer->finish();
+//        $tracer->flush();
     }
 }
