@@ -49,8 +49,8 @@ class AppProcessor {
     $input->readMessageEnd();
     $result = new \Xin\Thrift\MicroService\App_version_result();
     try {
-      $result->success = $this->handler_->version();
-    } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
+      $result->success = $this->handler_->version($args->options);
+    } catch (\Xin\Thrift\ZipkinService\ThriftException $ex) {
       $result->ex = $ex;
     }
     $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');

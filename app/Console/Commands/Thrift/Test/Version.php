@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Thrift\Test;
 
+use App\Core\Zipkin\ZipkinClient;
 use App\Thrift\Clients\AppClient;
 use Illuminate\Console\Command;
 
@@ -40,7 +41,7 @@ class Version extends Command
     {
         try {
             $client = AppClient::getInstance();
-            $this->info($client->version());
+            $this->info($client->version(ZipkinClient::getInstance()->options));
         } catch (\Exception $e) {
             dump($e->getMessage());
         }

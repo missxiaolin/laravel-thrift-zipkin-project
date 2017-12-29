@@ -33,6 +33,12 @@ class Tracer
         return [$trace, $options];
     }
 
+    /**
+     * @param ZipkinTracer $tracer
+     * @param $spanName
+     * @param Options $options
+     * @return array
+     */
     public function newChild(ZipkinTracer $tracer, $spanName, Options $options)
     {
         $context = TraceContext::create(

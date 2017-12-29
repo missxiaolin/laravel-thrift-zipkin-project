@@ -1,35 +1,27 @@
 <?php
-// +----------------------------------------------------------------------
-// | AppHandler.php [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2017 limingxinleo All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
-// +----------------------------------------------------------------------
 namespace App\Thrift\Services;
 
+use App\Thrift\Services\Impl\AppHandlerImpl;
 use Xin\Thrift\MicroService\AppIf;
 use Xin\Thrift\MicroService\ThriftException;
 use Xin\Thrift\ZipkinService\Options;
 
 class AppHandler extends Handler implements AppIf
 {
+    protected $impl = AppHandlerImpl::class;
     /**
-     * @desc   返回项目版本号
-     * @author limx
-     * @return mixed
-     * @throws ThriftException
+     * 返回项目版本号
+     * @param Options $options
+     * @return \Illuminate\Config\Repository|mixed
      */
-    public function version()
+    public function version(Options $options)
     {
-        return config('app.version');
+        return parent::version($options);
     }
 
     public function arrayTest($username)
     {
-        return [
-            $username
-        ];
+        return parent::arrayTest($username);
     }
 
     /**
@@ -39,21 +31,15 @@ class AppHandler extends Handler implements AppIf
      */
     public function testException(Options $options)
     {
-        throw new ThriftException([
-            'code' => '400',
-            'message' => '异常测试',
-        ]);
+        return parent::testException($options);
     }
 
+    /**
+     * @param Options $options
+     * @return mixed
+     */
     public function welcome(Options $options)
     {
-        $version = $this->test1();
-        return "You're xiaolin laravel-project {$version}";
-
-    }
-
-    public function test1()
-    {
-        return config('app.version');
+        return parent::welcome($options);
     }
 }

@@ -10,7 +10,7 @@ exception ThriftException {
 
 service App {
     // 返回项目版本号
-    string version() throws (1:ThriftException ex)
+    string version(1: zipkin.Options options) throws (1:zipkin.ThriftException ex)
 
     // 欢迎语句
     string welcome (1: zipkin.Options options) throws (1:ThriftException ex)
