@@ -7,3 +7,8 @@ struct Options {
     3: string spanId,
     4: string sampled,
 }
+
+exception ThriftException {
+  1: i32 code,
+  2: string message
+}

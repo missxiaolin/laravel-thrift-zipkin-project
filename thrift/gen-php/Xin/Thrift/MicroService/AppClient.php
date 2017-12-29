@@ -80,15 +80,70 @@ class AppClient implements \Xin\Thrift\MicroService\AppIf {
     throw new \Exception("version failed: unknown result");
   }
 
-  public function testException()
+  public function welcome(\Xin\Thrift\ZipkinService\Options $options)
   {
-    $this->send_testException();
+    $this->send_welcome($options);
+    return $this->recv_welcome();
+  }
+
+  public function send_welcome(\Xin\Thrift\ZipkinService\Options $options)
+  {
+    $args = new \Xin\Thrift\MicroService\App_welcome_args();
+    $args->options = $options;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'welcome', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('welcome', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_welcome()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Xin\Thrift\MicroService\App_welcome_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Xin\Thrift\MicroService\App_welcome_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->ex !== null) {
+      throw $result->ex;
+    }
+    throw new \Exception("welcome failed: unknown result");
+  }
+
+  public function testException(\Xin\Thrift\ZipkinService\Options $options)
+  {
+    $this->send_testException($options);
     return $this->recv_testException();
   }
 
-  public function send_testException()
+  public function send_testException(\Xin\Thrift\ZipkinService\Options $options)
   {
     $args = new \Xin\Thrift\MicroService\App_testException_args();
+    $args->options = $options;
     $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {

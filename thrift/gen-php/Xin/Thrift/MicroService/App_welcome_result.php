@@ -16,33 +16,44 @@ use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
 
-class App_testException_args {
+class App_welcome_result {
   static $_TSPEC;
 
   /**
-   * @var \Xin\Thrift\ZipkinService\Options
+   * @var string
    */
-  public $options = null;
+  public $success = null;
+  /**
+   * @var \Xin\Thrift\MicroService\ThriftException
+   */
+  public $ex = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
+        0 => array(
+          'var' => 'success',
+          'type' => TType::STRING,
+          ),
         1 => array(
-          'var' => 'options',
+          'var' => 'ex',
           'type' => TType::STRUCT,
-          'class' => '\Xin\Thrift\ZipkinService\Options',
+          'class' => '\Xin\Thrift\MicroService\ThriftException',
           ),
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['options'])) {
-        $this->options = $vals['options'];
+      if (isset($vals['success'])) {
+        $this->success = $vals['success'];
+      }
+      if (isset($vals['ex'])) {
+        $this->ex = $vals['ex'];
       }
     }
   }
 
   public function getName() {
-    return 'App_testException_args';
+    return 'App_welcome_result';
   }
 
   public function read($input)
@@ -60,10 +71,17 @@ class App_testException_args {
       }
       switch ($fid)
       {
+        case 0:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->success);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
         case 1:
           if ($ftype == TType::STRUCT) {
-            $this->options = new \Xin\Thrift\ZipkinService\Options();
-            $xfer += $this->options->read($input);
+            $this->ex = new \Xin\Thrift\MicroService\ThriftException();
+            $xfer += $this->ex->read($input);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -80,13 +98,15 @@ class App_testException_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('App_testException_args');
-    if ($this->options !== null) {
-      if (!is_object($this->options)) {
-        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-      }
-      $xfer += $output->writeFieldBegin('options', TType::STRUCT, 1);
-      $xfer += $this->options->write($output);
+    $xfer += $output->writeStructBegin('App_welcome_result');
+    if ($this->success !== null) {
+      $xfer += $output->writeFieldBegin('success', TType::STRING, 0);
+      $xfer += $output->writeString($this->success);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->ex !== null) {
+      $xfer += $output->writeFieldBegin('ex', TType::STRUCT, 1);
+      $xfer += $this->ex->write($output);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

@@ -16,7 +16,7 @@ use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
 
-class App_testException_args {
+class App_welcome_args {
   static $_TSPEC;
 
   /**
@@ -42,7 +42,7 @@ class App_testException_args {
   }
 
   public function getName() {
-    return 'App_testException_args';
+    return 'App_welcome_args';
   }
 
   public function read($input)
@@ -80,7 +80,7 @@ class App_testException_args {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('App_testException_args');
+    $xfer += $output->writeStructBegin('App_welcome_args');
     if ($this->options !== null) {
       if (!is_object($this->options)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);

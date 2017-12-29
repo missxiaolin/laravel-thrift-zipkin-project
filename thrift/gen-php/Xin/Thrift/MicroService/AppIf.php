@@ -23,10 +23,17 @@ interface AppIf {
    */
   public function version();
   /**
+   * @param \Xin\Thrift\ZipkinService\Options $options
    * @return string
    * @throws \Xin\Thrift\MicroService\ThriftException
    */
-  public function testException();
+  public function welcome(\Xin\Thrift\ZipkinService\Options $options);
+  /**
+   * @param \Xin\Thrift\ZipkinService\Options $options
+   * @return string
+   * @throws \Xin\Thrift\ZipkinService\ThriftException
+   */
+  public function testException(\Xin\Thrift\ZipkinService\Options $options);
   /**
    * @param string $username
    * @return array

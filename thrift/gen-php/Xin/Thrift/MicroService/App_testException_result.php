@@ -24,7 +24,7 @@ class App_testException_result {
    */
   public $success = null;
   /**
-   * @var \Xin\Thrift\MicroService\ThriftException
+   * @var \Xin\Thrift\ZipkinService\ThriftException
    */
   public $ex = null;
 
@@ -38,7 +38,7 @@ class App_testException_result {
         1 => array(
           'var' => 'ex',
           'type' => TType::STRUCT,
-          'class' => '\Xin\Thrift\MicroService\ThriftException',
+          'class' => '\Xin\Thrift\ZipkinService\ThriftException',
           ),
         );
     }
@@ -80,7 +80,7 @@ class App_testException_result {
           break;
         case 1:
           if ($ftype == TType::STRUCT) {
-            $this->ex = new \Xin\Thrift\MicroService\ThriftException();
+            $this->ex = new \Xin\Thrift\ZipkinService\ThriftException();
             $xfer += $this->ex->read($input);
           } else {
             $xfer += $input->skip($ftype);

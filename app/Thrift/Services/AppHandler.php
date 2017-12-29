@@ -10,6 +10,7 @@ namespace App\Thrift\Services;
 
 use Xin\Thrift\MicroService\AppIf;
 use Xin\Thrift\MicroService\ThriftException;
+use Xin\Thrift\ZipkinService\Options;
 
 class AppHandler extends Handler implements AppIf
 {
@@ -32,15 +33,27 @@ class AppHandler extends Handler implements AppIf
     }
 
     /**
-     * @desc   测试异常抛出
-     * @author limx
+     * 测试异常抛出
+     * @param Options $options
      * @throws ThriftException
      */
-    public function testException()
+    public function testException(Options $options)
     {
         throw new ThriftException([
             'code' => '400',
             'message' => '异常测试',
         ]);
+    }
+
+    public function welcome(Options $options)
+    {
+        $version = $this->test1();
+        return "You're xiaolin laravel-project {$version}";
+
+    }
+
+    public function test1()
+    {
+        return config('app.version');
     }
 }

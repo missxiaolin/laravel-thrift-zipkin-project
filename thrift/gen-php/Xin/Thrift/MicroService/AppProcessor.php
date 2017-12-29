@@ -66,14 +66,37 @@ class AppProcessor {
       $output->getTransport()->flush();
     }
   }
+  protected function process_welcome($seqid, $input, $output) {
+    $args = new \Xin\Thrift\MicroService\App_welcome_args();
+    $args->read($input);
+    $input->readMessageEnd();
+    $result = new \Xin\Thrift\MicroService\App_welcome_result();
+    try {
+      $result->success = $this->handler_->welcome($args->options);
+    } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'welcome', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('welcome', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
   protected function process_testException($seqid, $input, $output) {
     $args = new \Xin\Thrift\MicroService\App_testException_args();
     $args->read($input);
     $input->readMessageEnd();
     $result = new \Xin\Thrift\MicroService\App_testException_result();
     try {
-      $result->success = $this->handler_->testException();
-    } catch (\Xin\Thrift\MicroService\ThriftException $ex) {
+      $result->success = $this->handler_->testException($args->options);
+    } catch (\Xin\Thrift\ZipkinService\ThriftException $ex) {
       $result->ex = $ex;
     }
     $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
