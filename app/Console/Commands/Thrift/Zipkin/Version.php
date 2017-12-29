@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Console\Commands\Thrift\Test;
+namespace App\Console\Commands\Thrift\Zipkin;
 
+use App\Console\Tack;
 use App\Core\Zipkin\ZipkinClient;
 use App\Thrift\Clients\AppClient;
-use Illuminate\Console\Command;
 
-class Version extends Command
+class Version extends Tack
 {
     /**
      * The name and signature of the console command.
@@ -33,18 +33,17 @@ class Version extends Command
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return mixed
+     * 业务逻辑
      */
-    public function handle()
+    protected function onConstruct()
     {
+        // TODO: Implement onConstruct() method.
         try {
-            $client = AppClient::getInstance();
-            $this->info($client->version(ZipkinClient::getInstance()->options));
+            ZipkinClient::getInstance()->setOptions($this->options);
+            $version = AppClient::getInstance()->version(ZipkinClient::getInstance()->options);
+            dump($version);
         } catch (\Exception $e) {
             dump($e->getMessage());
         }
-
     }
 }

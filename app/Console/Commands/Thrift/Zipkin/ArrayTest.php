@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Console\Commands\Thrift\Test;
+namespace App\Console\Commands\Thrift\Zipkin;
 
+
+use App\Console\Tack;
+use App\Core\Zipkin\ZipkinClient;
 use App\Thrift\Clients\AppClient;
-use Illuminate\Console\Command;
 
-class ArrayTest extends Command
+class ArrayTest extends Tack
 {
     /**
      * The name and signature of the console command.
@@ -32,18 +34,18 @@ class ArrayTest extends Command
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return mixed
+     * 业务逻辑
      */
-    public function handle()
+    protected function onConstruct()
     {
+        // TODO: Implement onConstruct() method.
         try {
-            $client = AppClient::getInstance();
-            dump($client->arrayTest('小林'));
+            ZipkinClient::getInstance()->setOptions($this->options);
+            $welcome = AppClient::getInstance()->welcome(ZipkinClient::getInstance()->options);
+            dump($welcome);
         } catch (\Exception $e) {
             dump($e->getMessage());
         }
-
     }
+
 }
