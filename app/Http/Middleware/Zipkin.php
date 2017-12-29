@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Core\Zipkin\Tracer;
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
 class Zipkin
 {
@@ -17,11 +17,16 @@ class Zipkin
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        dd(1);
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
-        }
+        $tracer = tracer();
+        $uri = $request->url();
+        list($new_tracer, $options) = Tracer::getInstance()->newTrace($tracer, $uri);
+        $request['new_tracer'] = $new_tracer;
+        $request['options'] = $options;
+        $data =  $next($request);
 
-        return $next($request);
+        // 发送方法
+        $new_tracer->finish();
+        $tracer->flush();
+        return $data;
     }
 }
