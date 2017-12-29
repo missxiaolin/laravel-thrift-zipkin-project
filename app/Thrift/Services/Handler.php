@@ -37,7 +37,8 @@ abstract class Handler extends Injectable
         $arguments[] = $options;
 
         try {
-            $result = $this->impl::getInstance()->$name(...$arguments);
+            $impl = $this->impl;
+            $result = $impl::getInstance()->$name(...$arguments);
         } finally {
             $child_trace->finish();
             $tracer->flush();
