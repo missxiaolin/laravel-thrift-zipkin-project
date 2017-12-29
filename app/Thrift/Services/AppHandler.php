@@ -9,6 +9,7 @@ use Xin\Thrift\ZipkinService\Options;
 class AppHandler extends Handler implements AppIf
 {
     protected $impl = AppHandlerImpl::class;
+
     /**
      * 返回项目版本号
      * @param Options $options
@@ -19,9 +20,9 @@ class AppHandler extends Handler implements AppIf
         return parent::version($options);
     }
 
-    public function arrayTest($username)
+    public function arrayTest($username, Options $options)
     {
-        return parent::arrayTest($username);
+        return parent::arrayTest($username, $options);
     }
 
     /**

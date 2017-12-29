@@ -23,6 +23,10 @@ class App_arrayTest_args {
    * @var string
    */
   public $username = null;
+  /**
+   * @var \Xin\Thrift\ZipkinService\Options
+   */
+  public $options = null;
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
@@ -31,11 +35,19 @@ class App_arrayTest_args {
           'var' => 'username',
           'type' => TType::STRING,
           ),
+        2 => array(
+          'var' => 'options',
+          'type' => TType::STRUCT,
+          'class' => '\Xin\Thrift\ZipkinService\Options',
+          ),
         );
     }
     if (is_array($vals)) {
       if (isset($vals['username'])) {
         $this->username = $vals['username'];
+      }
+      if (isset($vals['options'])) {
+        $this->options = $vals['options'];
       }
     }
   }
@@ -66,6 +78,14 @@ class App_arrayTest_args {
             $xfer += $input->skip($ftype);
           }
           break;
+        case 2:
+          if ($ftype == TType::STRUCT) {
+            $this->options = new \Xin\Thrift\ZipkinService\Options();
+            $xfer += $this->options->read($input);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
         default:
           $xfer += $input->skip($ftype);
           break;
@@ -82,6 +102,14 @@ class App_arrayTest_args {
     if ($this->username !== null) {
       $xfer += $output->writeFieldBegin('username', TType::STRING, 1);
       $xfer += $output->writeString($this->username);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->options !== null) {
+      if (!is_object($this->options)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('options', TType::STRUCT, 2);
+      $xfer += $this->options->write($output);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

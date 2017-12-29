@@ -19,5 +19,5 @@ service App {
     string testException(1: zipkin.Options options) throws(1:zipkin.ThriftException ex)
 
     // 返回数组测试
-    map<i32,string> arrayTest(1:string username) throws (1:ThriftException ex)
+    map<i32,string> arrayTest(1:string username,2: zipkin.Options options) throws (1:ThriftException ex)
 }

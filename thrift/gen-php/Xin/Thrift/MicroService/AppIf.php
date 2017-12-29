@@ -37,10 +37,11 @@ interface AppIf {
   public function testException(\Xin\Thrift\ZipkinService\Options $options);
   /**
    * @param string $username
+   * @param \Xin\Thrift\ZipkinService\Options $options
    * @return array
    * @throws \Xin\Thrift\MicroService\ThriftException
    */
-  public function arrayTest($username);
+  public function arrayTest($username, \Xin\Thrift\ZipkinService\Options $options);
 }
 
 

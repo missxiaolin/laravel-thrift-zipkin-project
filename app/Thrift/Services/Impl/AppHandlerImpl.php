@@ -55,7 +55,7 @@ class AppHandlerImpl extends ImplHandler implements AppIf
         return config('app.version');
     }
 
-    public function arrayTest($username)
+    public function arrayTest($username, Options $options)
     {
         // TODO: Implement arrayTest() method.
         return [

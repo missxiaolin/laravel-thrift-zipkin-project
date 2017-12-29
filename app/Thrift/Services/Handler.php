@@ -26,8 +26,22 @@ abstract class Handler extends Injectable
                 'message' => '微服务Handler没有设置其实现',
             ]);
         }
-        /** @var  ImplHandler */
-        $result = $this->impl::getInstance()->$name(...$arguments);
+
+
+        /** @var Tracer $tracing */
+        $tracer = tracer();
+
+        $spanName = $this->impl . '@' . $name;
+        $options = array_pop($arguments);
+        list($child_trace, $options) = Tracer::getInstance()->newChild($tracer, $spanName, $options);
+        $arguments[] = $options;
+
+        try {
+            $result = $this->impl::getInstance()->$name(...$arguments);
+        } finally {
+            $child_trace->finish();
+            $tracer->flush();
+        }
 
         return $result;
     }
