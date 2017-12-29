@@ -26,7 +26,7 @@ class AppHandlerImpl extends ImplHandler implements AppIf
      */
     public function welcome(Options $options)
     {
-        $version = config('app.version');
+        $version = AppClient::getInstance()->version($options);
         return "You're using xiaolin laravel-project {$version}";
     }
 

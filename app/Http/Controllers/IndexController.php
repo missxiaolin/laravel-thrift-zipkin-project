@@ -14,10 +14,16 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
+        $res = [];
         $data = $request->all();
         ZipkinClient::getInstance()->setOptions($data['options']);
         $welcome = AppClient::getInstance()->welcome(ZipkinClient::getInstance()->options);
-        return api_response($welcome);
+        $version = AppClient::getInstance()->version(ZipkinClient::getInstance()->options);
+        $res = [
+            'welcome' => $welcome,
+            'version' => $version
+        ];
+        return api_response($res);
 
     }
 }
