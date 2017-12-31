@@ -36,7 +36,7 @@ class TracerServiceProvider extends ServiceProvider
 //            // Logger to stdout
             $logger = new Logger('debug');
 //
-            $reporter = new HttpLogging($client, $logger);
+//            $reporter = new HttpLogging($client, $logger);
             $reporter = new AsyncHttpReporter($client, $logger);
             $sampler = BinarySampler::createAsAlwaysSample();
             $tracing = TracingBuilder::create()
