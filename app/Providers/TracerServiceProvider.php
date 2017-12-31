@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Core\Zipkin\AsyncHttpReporter;
 use Illuminate\Support\ServiceProvider;
 use GuzzleHttp\Client;
 use Monolog\Logger;
@@ -36,6 +37,7 @@ class TracerServiceProvider extends ServiceProvider
             $logger = new Logger('debug');
 //
             $reporter = new HttpLogging($client, $logger);
+            $reporter = new AsyncHttpReporter($client, $logger);
             $sampler = BinarySampler::createAsAlwaysSample();
             $tracing = TracingBuilder::create()
                 ->havingLocalEndpoint($endpoint)

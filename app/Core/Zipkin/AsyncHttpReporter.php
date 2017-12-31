@@ -1,12 +1,14 @@
 <?php
 namespace App\Core\Zipkin;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Jobs\Zipkin\ZipkinSend;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
+use Zipkin\Recording\Span;
+use Zipkin\Reporter;
 
 
-class AsyncHttpReporter implements ShouldQueue
+class AsyncHttpReporter implements Reporter
 {
 
     const DEFAULT_OPTIONS = [
@@ -34,9 +36,8 @@ class AsyncHttpReporter implements ShouldQueue
      * @param ClientInterface $client
      * @param LoggerInterface $logger
      * @param array $options
-     * @param $uri
      */
-    public function __construct(ClientInterface $client, LoggerInterface $logger, array $options = [], $uri = '')
+    public function __construct(ClientInterface $client, LoggerInterface $logger, array $options = [])
     {
         $this->client = $client;
         $this->logger = $logger;
@@ -50,6 +51,7 @@ class AsyncHttpReporter implements ShouldQueue
      */
     public function report(array $spans)
     {
-
+        $zipkin_job = new ZipkinSend($spans, $this->options);
+        dispatch($zipkin_job);
     }
 }
