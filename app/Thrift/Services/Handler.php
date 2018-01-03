@@ -1,14 +1,8 @@
 <?php
-// +----------------------------------------------------------------------
-// | Base.php [ WE CAN DO IT JUST THINK IT ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2017 limingxinleo All rights reserved.
-// +----------------------------------------------------------------------
-// | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
-// +----------------------------------------------------------------------
 namespace App\Thrift\Services;
 
 use App\Core\Zipkin\Tracer;
+use App\Core\Zipkin\ZipkinClient;
 use App\Thrift\Services\Impl\ImplHandler;
 use Phalcon\Di\Injectable;
 use Xin\Thrift\MicroService\ThriftException;
@@ -34,6 +28,7 @@ abstract class Handler extends Injectable
         $spanName = $this->impl . '@' . $name;
         $options = array_pop($arguments);
         list($child_trace, $options) = Tracer::getInstance()->newChild($tracer, $spanName, $options);
+        ZipkinClient::getInstance()->setOptions($options);
         $arguments[] = $options;
 
         try {
