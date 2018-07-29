@@ -80,7 +80,7 @@ class AppHandler extends Handler implements AppIf
 ~~~
 
 ## 负载均衡
-- Nginx Stream负载均衡已经十分强大了，自带健康检查。[TCP负载均衡](https://github.com/limingxinleo/note/blob/master/nginx/nginx.md#tcp负载均衡)
+- Nginx Stream负载均衡已经十分强大了，自带健康检查。[TCP负载均衡](https://github.com/missxiaolin/note/blob/master/nginx/nginx.md#tcp%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1)
 
 ## 服务发现
 1. 项目本人已内置基于Thrift的注册中心功能
